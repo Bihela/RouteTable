@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app-container">
     <h1>TravelRoute</h1>
     <form @submit.prevent="submitForm" class="form-container">
       <div>
@@ -82,26 +82,78 @@ const submitForm = () => {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-.trip-container {
+.app-container {
   font-family: 'Roboto', sans-serif;
   padding: 2em;
-  background: #f8f9fa;
-  border-radius: 8px;
-  max-width: 800px;
-  margin: 2em auto;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background: hsl(0, 0%, 100%);
+  color: #2c3e50;
+  max-width: 1500px;
+  margin: 0 auto;
 }
 
 h1 {
   text-align: center;
-  color: #2c3e50;
+  color: #f76234; 
   margin-bottom: 1em;
 }
 
 .description {
   text-align: center;
-  color: #34495e;
+  color: #2c3e50;
   margin-bottom: 2em;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2em;
+  background: #ffffff;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 2em auto;
+  box-shadow: 0 0 10px rgb(240, 72, 6);
+}
+
+form div {
+  margin-bottom: 1em;
+  width: 100%;
+}
+
+label {
+  display: block;
+  color: #2c3e50;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 0.5em;
+  border: 1px solid #ecf0f1;
+  border-radius: 4px;
+}
+
+button {
+  padding: 0.5em 1em;
+  background-color: #e2725b; 
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #008080; 
+}
+
+.trip-container {
+  padding: 2em;
+  background: #f8f9fa;
+  border-radius: 8px;
+  max-width: 800px;
+  margin: 2em auto;
+  box-shadow: 0 0 10px rgb(255, 95, 2);
 }
 
 .trip-details {
@@ -126,12 +178,12 @@ h1 {
 }
 
 .day-plan h2 {
-  color: #3498db;
+  color: #008080; 
   margin-bottom: 0.5em;
 }
 
 .day-plan p {
-  color: #7f8c8d;
+  color: #2c3e50;
   margin: 0.5em 0;
 }
 
@@ -149,50 +201,8 @@ h1 {
   color: #2c3e50;
 }
 
-.form-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2em;
-  background: #ffffff;
-  border-radius: 8px;
-  max-width: 600px;
-  margin: 2em auto;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-form div {
-  margin-bottom: 1em;
-  width: 100%;
-}
-
-label {
-  display: block;
-  color: #2c3e50;
-}
-
-input {
-  width: 100%;
-  padding: 0.5em;
-  border: 1px solid #dcdcdc;
-  border-radius: 4px;
-}
-
-button {
-  padding: 0.5em 1em;
-  background-color: #3498db;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #2980b9;
-}
-
 pre {
-  background: #f4f4f4;
+  background: #ecf0f1;
   padding: 1em;
   border-radius: 4px;
 }
