@@ -22,7 +22,6 @@ export default function useTravelRoute() {
       console.log('Response headers:', [...response.headers.entries()]);
 
       if (!response.ok) {
-        // Attempt to read and log the response body if the response is not ok
         let errorMessage = 'Unknown error';
         try {
           const errorData = await response.json();
@@ -33,7 +32,6 @@ export default function useTravelRoute() {
         throw new Error(`API error: ${response.statusText} - ${errorMessage}`);
       }
 
-      // Try to parse the response body
       try {
         const responseData = await response.json();
         console.log('Response data:', responseData);
