@@ -11,8 +11,12 @@
         <input id="finishLocation" v-model="form.finishLocation" required />
       </div>
       <div>
-        <label for="continuationPoints">Continuation Points (comma-separated):</label>
-        <input id="continuationPoints" v-model="form.continuationPoints" />
+        <label>Continuation Points:</label>
+        <div v-for="(point, index) in form.continuationPoints" :key="index" class="continuation-point">
+          <input :value="point" @input="updateContinuationPoint($event, index)" />
+          <button type="button" @click="removeContinuationPoint(index)">Remove</button>
+        </div>
+        <button type="button" @click="addContinuationPoint">Add Continuation Point</button>
       </div>
       <div>
         <label for="departureDate">Departure Date:</label>
@@ -24,6 +28,7 @@
       </div>
       <button type="submit">Generate Route</button>
     </form>
+    <div v-if="isLoading" class="loading-bar">Loading...</div>
     <div v-if="route" class="trip-container">
       <h1>{{ route.title }}</h1>
       <p class="description">{{ route.description }}</p>
@@ -58,18 +63,30 @@ import useTravelRoute from '~/composables/useTravelRoute'
 const form = ref({
   startLocation: '',
   finishLocation: '',
-  continuationPoints: '',
+  continuationPoints: [''], // Initialize with one empty point
   departureDate: '',
   duration: ''
 })
 
-const { route, error, fetchRoute } = useTravelRoute()
+const { route, error, isLoading, fetchRoute } = useTravelRoute() // Include isLoading
+
+const addContinuationPoint = () => {
+  form.value.continuationPoints.push('')
+}
+
+const removeContinuationPoint = (index) => {
+  form.value.continuationPoints.splice(index, 1)
+}
+
+const updateContinuationPoint = (event, index) => {
+  form.value.continuationPoints[index] = event.target.value
+}
 
 const submitForm = () => {
   const request = {
     StartLocation: form.value.startLocation,
     FinishLocation: form.value.finishLocation,
-    ContinuationPoints: form.value.continuationPoints ? form.value.continuationPoints.split(',').map(p => p.trim()) : null,
+    ContinuationPoints: form.value.continuationPoints.filter(point => point.trim() !== ''), // Filter out empty points
     DepartureDate: new Date(form.value.departureDate).toISOString(),
     Duration: parseInt(form.value.duration, 10)
   }
@@ -147,13 +164,20 @@ button:hover {
   background-color: #008080; 
 }
 
+.loading-bar {
+  margin-top: 1em;
+  font-size: 1.2em;
+  color: #e2725b; 
+  text-align: center;
+}
+
 .trip-container {
   padding: 2em;
   background: #f8f9fa;
   border-radius: 8px;
   max-width: 800px;
   margin: 2em auto;
-  box-shadow: 0 0 10px rgb(255, 95, 2);
+  box-shadow: 0 0 10px rgb(233, 87, 3);
 }
 
 .trip-details {
@@ -205,5 +229,30 @@ pre {
   background: #ecf0f1;
   padding: 1em;
   border-radius: 4px;
+}
+
+.continuation-point {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.continuation-point input {
+  flex: 1;
+  margin-right: 1em;
+}
+
+.continuation-point button {
+  padding: 0.5em 1em;
+  background-color: #e2725b; 
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.continuation-point button:hover {
+  background-color: #008080; 
 }
 </style>

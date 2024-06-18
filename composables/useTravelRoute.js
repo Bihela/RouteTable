@@ -3,11 +3,13 @@ import { ref } from 'vue';
 export default function useTravelRoute() {
   const route = ref(null);
   const error = ref(null);
+  const isLoading = ref(false);  
 
   const fetchRoute = async (request) => {
-    try {
-      console.log('Sending request:', request);
+    isLoading.value = true;  
+    console.log('Sending request:', request);
       
+    try {
       const response = await fetch('https://localhost:7221/Home', {
         method: 'POST',
         headers: {
@@ -40,12 +42,13 @@ export default function useTravelRoute() {
         console.error('Error parsing JSON response:', jsonError);
         throw new Error('Error parsing response data');
       }
-      
     } catch (err) {
       console.error('Fetch error:', err);
       error.value = err;
+    } finally {
+      isLoading.value = false; 
     }
   };
 
-  return { route, error, fetchRoute };
+  return { route, error, isLoading, fetchRoute };  
 }
